@@ -1,0 +1,46 @@
+# === Maven / Spring Boot ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# === Gradle (si lo usas en paralelo) ===
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# === Eclipse / STS ===
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# === Archivos de IDEs adicionales ===
+*.iml
+.idea/
+.vscode/
+
+# === Archivos de sistema ===
+.DS_Store
+Thumbs.db
+
+# === Java compilados ===
+*.class
+
+# === Logs y temporales ===
+*.log
+*.tmp
+*.swp
+
+# === Configuración sensible ===
+application-*.yml
+application-*.properties
+
+# === Cobertura y pruebas ===
+/coverage/
+*.exec
+*.ec
+*.lcov
