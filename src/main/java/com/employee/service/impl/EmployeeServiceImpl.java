@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.employee.dto.request.EmployeeRequest;
+import com.employee.dto.response.EmployeeResponse;
 import com.employee.entity.Employee;
+import com.employee.mapper.EmployeeMapper;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmployeeService;
 
@@ -12,26 +15,30 @@ import com.employee.service.EmployeeService;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
+	private final EmployeeMapper employeeMapper;
 
-	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository,EmployeeMapper employeeMapper) {
 		this.employeeRepository = employeeRepository;
+		this.employeeMapper = employeeMapper;
 	}
 
 	@Override
-	public List<Employee> findAll() {
-
-		return employeeRepository.findAll();
+	public List<EmployeeResponse> findAll() {
+		
+		return employeeMapper.toListDTO(employeeRepository.findAll());
 	}
 
 	@Override
-	public Employee findById(Long employeeId) {
+	public EmployeeResponse findById(Long employeeId) {
 
-		return employeeRepository.findById(employeeId).get();
+		return employeeMapper.toDTO(employeeRepository.findById(employeeId).get());
 	}
 
 	@Override
-	public Employee save(Employee employee) {
-		return employeeRepository.saveAndFlush(employee);
+	public EmployeeResponse save(EmployeeRequest employee) {
+		Employee emp = employeeMapper.toEntity(employee);
+		EmployeeResponse empResp = employeeMapper.toDTO( employeeRepository.saveAndFlush(emp)) ;
+		return empResp;
 	}
 
 	@Override
@@ -44,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public Employee update(Long employeeId, Employee employee) {
+	public EmployeeResponse update(Long employeeId, EmployeeRequest employee) {
 		return  employeeRepository.findById(employeeId)
 							.map(existingEmployee -> {
 								
@@ -76,14 +83,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 				                    existingEmployee.setStatus(employee.getStatus());
 				                }
 								
-								return employeeRepository.saveAndFlush(existingEmployee);
+				                EmployeeResponse empResponse =  employeeMapper.toDTO(employeeRepository.saveAndFlush(existingEmployee));
+								return empResponse;
 							})
 							.orElseThrow( () -> new RuntimeException("Empleado no encontrado") );
 	}
 	
 	@Override
-	public List<Employee> findByName(String name){
-		return employeeRepository.findByNameJPQL(name);
+	public List<EmployeeResponse> findByName(String name){
+		List<EmployeeResponse> employeesResponse = employeeMapper.toListDTO(employeeRepository.findByNameJPQL(name));
+		return employeesResponse;
 	}
 
 }

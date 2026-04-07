@@ -1,0 +1,330 @@
+{
+  "info": {
+    "_postman_id": "016b1792-4b44-45f3-bef6-a41286318f9d",
+    "name": "empleados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4779087"
+  },
+  "item": [
+    {
+      "name": "addToken",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Convertir la respuesta a un objeto JSON\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "// 2. Verificar que el status sea 200 y que el token exista\r",
+              "if (pm.response.code === 200 && response.token) {\r",
+              "    \r",
+              "    // 3. Guardar el token en la variable de colección\r",
+              "    pm.collectionVariables.set(\"token\", response.token);\r",
+              "    \r",
+              "    console.log(\"Token guardado correctamente: \" + response.token);\r",
+              "} else {\r",
+              "    console.error(\"No se pudo recuperar el token de la respuesta\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/crud/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "all",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findByName",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/employees/search?name=ram",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "ram"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findById",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/employees/6",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees",
+            "6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "save",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"MANUEL\",\r\n    \"lastName\": \"ALVARADO\",\r\n    \"secondLastName\": \"BOJORQUEZ\",\r\n    \"age\": 25,\r\n    \"gender\": \"M\",\r\n    \"birthDate\": \"10-11-2000\",\r\n    \"position\": \"CONTADOR\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/crud/employees",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/employees/16",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees",
+            "16"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"MANOLO\",\r\n    \"birthDate\": \"12-02-2001\",\r\n    \"status\": 0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/crud/employees/16",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees",
+            "16"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "invalid-path",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/employees-invalid-path",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "employees-invalid-path"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "actuator/healthcheck",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/crud/actuator/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "crud",
+            "actuator",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}

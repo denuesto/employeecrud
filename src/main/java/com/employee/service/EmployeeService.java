@@ -2,17 +2,18 @@ package com.employee.service;
 
 import java.util.List;
 
-import com.employee.entity.Employee;
+import com.employee.dto.request.EmployeeRequest;
+import com.employee.dto.response.EmployeeResponse;
 
 public interface EmployeeService {
 	
-	List<Employee> findAll();
-	Employee findById(Long employeeId);
+	List<EmployeeResponse> findAll();
+	EmployeeResponse findById(Long employeeId);
 	
-	Employee save(Employee employee);
-	Employee update(Long employeeId,Employee employee);
+	EmployeeResponse save(EmployeeRequest employee);
+	EmployeeResponse update(Long employeeId,EmployeeRequest employee);
 	boolean deleteById(Long employeeId);
 	
-	List<Employee> findByName(String name);
+	List<EmployeeResponse> findByName(String name);
 
 }
